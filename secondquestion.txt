@@ -1,0 +1,53 @@
+Q2)Three sum problem sample problem: Given an array of integers , find all the unique triplets in the array which give the sum of zero.The          solution should return the list of the triplets.
+=>
+
+#include <stdio.h>
+#include <stdlib.h>
+
+int compare(const void *a, const void *b) {
+    return (*(int *)a - *(int *)b);
+}
+
+void threeSum(int arr[], int n) {
+    qsort(arr, n, sizeof(int), compare);
+    printf("Unique triplets that sum to 0 are:\n");
+    for (int i = 0; i < n - 2; i++) {
+          if (i > 0 && arr[i] == arr[i - 1])
+            continue;
+
+        int left = i + 1;          
+        int right = n - 1;        
+        int target = -arr[i]; 
+
+        while (left < right) {
+            int sum = arr[left] + arr[right];
+            if (sum == target) {
+                printf("%d %d %d\n", arr[i], arr[left], arr[right]);
+
+                
+                while (left < right && arr[left] == arr[left + 1])
+                    left++;
+                
+                while (left < right && arr[right] == arr[right - 1])
+                    right--;
+
+        
+                left++;
+                right--;
+            } else if (sum < target) {
+                left++;  
+            } else {
+                right--;
+            }
+        }
+    }
+}
+
+int main() {
+    int arr[] = {-1, 0, 1, 2, -1, -4};
+    int n = sizeof(arr) / sizeof(arr[0]);
+
+    threeSum(arr, n);
+
+    return 0;
+}

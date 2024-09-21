@@ -1,0 +1,52 @@
+Q1)Reverse a stack you are given a stack of integers.Your task is to reverse the order of the elements ion the stack using only stack operations (pish and pop) and without using any additional data sturcture. Ex. stack={1,2,3,4,5} reverse the stack(stack) print(stack) and Output should be {5,4,3,2,1}. 
+=>
+
+#include <stdio.h>
+#define MAX 100
+
+
+void insertAtBottom(int stack[], int* top, int item) {
+    if (*top == -1) {
+
+        stack[++(*top)] = item;
+    } else {
+
+        int temp = stack[(*top)--];
+        insertAtBottom(stack, top, item);
+        stack[++(*top)] = temp;
+    }
+}
+void reverseStack(int stack[], int* top) {
+    if (*top != -1) {
+        int temp = stack[(*top)--];
+        reverseStack(stack, top);
+        insertAtBottom(stack, top, temp);
+    }
+}
+void printStack(int stack[], int top) {
+    for (int i = 0; i <= top; i++) {
+        printf("%d ", stack[i]);
+    }
+    printf("\n");
+}
+
+int main() {
+    int stack[MAX];
+    int top = -1;
+
+    stack[++top] = 1;
+    stack[++top] = 2;
+    stack[++top] = 3;
+    stack[++top] = 4;
+    stack[++top] = 5;
+
+    printf("Original Stack: ");
+    printStack(stack, top);
+
+    reverseStack(stack, &top);
+
+    printf("Reversed Stack: ");
+    printStack(stack, top);
+
+    return 0;
+}
